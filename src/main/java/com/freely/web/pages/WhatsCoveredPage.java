@@ -5,9 +5,11 @@ import org.openqa.selenium.By;
 
 public class WhatsCoveredPage extends BasePage {
 
-    private final By pageHeading = By.cssSelector("h1");
     private final By coverageItems = By.cssSelector("h2, h3, [class*='coverage-title'], [class*='benefit-title']");
     private final By getQuoteCta = By.cssSelector("a[href*='quote'], button[class*='quote']");
+    private final By pageheading = By.xpath("//*[@id='root'']/div/main/div/h2");
+
+
 
     public void openWhatsCoveredPage() {
         navigateTo(ConfigReader.getUrl("whats.covered.url", "/whats-covered"));
@@ -23,5 +25,10 @@ public class WhatsCoveredPage extends BasePage {
 
     public void clickGetQuoteCta() {
         clickElement(getQuoteCta);
+        switchToNewTab();
+    }
+
+    public void verifygetquotepage(){
+        isElementDisplayed(pageheading);
     }
 }

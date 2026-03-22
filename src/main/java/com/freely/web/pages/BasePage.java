@@ -31,8 +31,19 @@ public class BasePage {
         element.sendKeys(text);
     }
 
-    public String getElementText(By locator) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText();
+    public void switchToNewTab() {
+
+        String parentWindow = driver.getWindowHandle();
+
+        // Wait for new tab
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        for (String window : driver.getWindowHandles()) {
+            if (!window.equals(parentWindow)) {
+                driver.switchTo().window(window);
+                break;
+            }
+        }
     }
 
     public boolean isElementDisplayed(By locator) {
@@ -57,12 +68,6 @@ public class BasePage {
         // Wait for option to be visible
         wait.until(ExpectedConditions.visibilityOfElementLocated(option));
         // Then wait for it to be clickable and click
-        wait.until(ExpectedConditions.elementToBeClickable(option)).click();
-    }
-
-    public void selectStateDropdown(By inputField, String value) {
-        driver.findElement(inputField).sendKeys(value);
-        By option = By.xpath(String.format("", value));
         wait.until(ExpectedConditions.elementToBeClickable(option)).click();
     }
 
